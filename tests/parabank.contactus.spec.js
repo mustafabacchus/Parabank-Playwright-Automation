@@ -1,17 +1,15 @@
-//Import playwright dependencies
 import { test, expect } from '@playwright/test';
-import {Credentials, goToLandingPage} from './helper.js'
+import {goToLandingPage} from './helper.js'
 
-//Para Bank Test Website
 
-test.describe('Para Bank - Contact Us', () => {
+test.describe('TS Para Bank - Contact Us', () => {
   let page;
   test.beforeAll(async ({ browser }) => {
     page = await browser.newPage();
     await goToLandingPage(page);
   });
 
-  test('01 Contact Us - Fields Unfilled', async() => {
+  test('TC001 Contact Us - Fields Unfilled', async() => {
     //Footer link
     await page.getByRole('link', { name: 'Contact Us' }).click();
     await expect(page).toHaveTitle('ParaBank | Customer Care');
@@ -25,7 +23,7 @@ test.describe('Para Bank - Contact Us', () => {
     console.log('Contact fields unfilled.')
   });
 
-  test('02 Contact Us - Send', async() => {
+  test('TC002 Contact Us - Send', async() => {
     //Primary link
     await page.getByRole('link', { name: 'contact', exact: true }).click();
     await expect(page).toHaveTitle('ParaBank | Customer Care');
@@ -48,39 +46,3 @@ test.describe('Para Bank - Contact Us', () => {
     console.log('Contact request sent.')
   });
 });
-
-
-
-test.describe('Para Bank - Login', () => {
-  let page;
-  test.beforeAll(async ({ browser }) => {
-    page = await browser.newPage();
-    await goToLandingPage(page);
-  });
-  
-  test('A1 Login', async() => {
-    const credentials = new Credentials();
-    //Fill in login info
-    await page.locator('input[name="username"]').fill(credentials.user);
-    await page.locator('input[name="password"]').click();
-    await page.locator('input[name="password"]').fill(credentials.pass);
-    await page.getByRole('button', { name: 'Log In' }).click();
-    //User is taken to Accounts Overview page
-    await expect(page).toHaveTitle('ParaBank | Accounts Overview');
-    console.log('Login Successful')
-    
-    //Account table should be present
-    await expect(page.locator('[id="accountTable"]')).toBeVisible();
-    console.log('Account Table is Visible');
-  });
-
-  test('A2 Access Account Detail', async() => {
-    const account = '15675'
-    await page.getByText(account).click();
-    await expect(page.locator('[id="accountId"]')).toHaveText(account);
-    await expect(page.locator('[id="transactionTable"]')).toBeVisible();
-    console.log('Transaction Table is Visible - acc: ' + account);
-  });
-});
-
-
