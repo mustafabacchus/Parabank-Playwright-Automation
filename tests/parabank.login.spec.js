@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
-import {goToLandingPage, login, good_credentials, bad_credentials} from './helper.js'
+import {goToLandingPage, login} from './helper.js';
+import {good_credentials, bad_credentials} from './credential-storage.js';
 
 
 test.describe('TS Para Bank - Login', () => {
   let page;
-  test.beforeAll(async ({ browser }) => {
+  test.beforeEach(async ({ browser }) => {
     page = await browser.newPage();
-    await goToLandingPage(page);
+      await goToLandingPage(page);
   });
   
   test('TC100 Successful Login', async() => {

@@ -1,6 +1,7 @@
 //Import playwright dependencies
 import { test, expect } from '@playwright/test';
-import {login, goToLandingPage, good_credentials} from './helper.js'
+import {login, goToLandingPage} from './helper.js'
+import {good_credentials} from './credential-storage.js';
 
 
 test.describe('TS Para Bank - Account Overview', () => {
